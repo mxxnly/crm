@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import random
+from django.conf import settings
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -26,8 +29,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+
+    email_confirmation_code = models.CharField(max_length=6, blank=True, null=True)
+
 
     objects = CustomUserManager()
 
@@ -36,15 +42,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+    def generate_confirmation_code(self):
+        code = f"{random.randint(100000, 999999)}"
+        self.email_confirmation_code = code
+        self.save()
+        return code
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     firstname = models.TextField(max_length=100, blank=True, null=True)
     lastname = models.TextField(max_length=100, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     telegram_nickname = models.CharField(max_length=32, blank=True, null=True)
-    profile_img = models.ImageField(upload_to="avatars/", blank=True, null=True)
+    profile_img = models.ImageField(upload_to="avatars/", default="avatars/prof.png")
     data_of_birth = models.DateField(blank=True, null=True)
     date_of_hire = models.DateField(blank=True, null=True)
     count_of_tasks = models.IntegerField(default=0)
