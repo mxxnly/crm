@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}register{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %}
+{% block content %}
+<h2 class="head-text">REGISTER</h2>
+<form method="post">
+  {% csrf_token %}
+  
+
+  {% if form.non_field_errors %}
+    <div class="message error">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+      <div class="message error">{{ field.errors|striptags }}</div>
+    {% endif %}
+  {% endfor %}
+
+  <button type="submit">sign up</button>
+</form>
+{% endblock %}

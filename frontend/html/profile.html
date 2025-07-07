@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home page{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+{% endblock %}
+{% block content %}
+<h2 class="head-text">PROFILE</h2>
+
+<div class="profile-container">
+    {% if profile.profile_img %}
+      <img src="{{ profile.profile_img.url }}" alt="Profile Image" />
+    {% else %}
+      <img src="{% static 'img/default-profile.png' %}" alt="No photo" />
+    {% endif %}
+  
+    <div class="profile-name">{{ profile.firstname }} {{ profile.lastname }}</div>
+
+  </div>
+<h2 class="head-text">WORK INFO</h2>
+<div class="profile-container-tasks">
+    <div class="task-stats">
+        <div class="title">Count of tasks</div>
+        <div class="number">{{ profile.count_of_tasks }}</div>
+      </div>
+      
+      <div class="task-stats">
+        <div class="title">Finished tasks</div>
+        <div class="number">{{ profile.count_of_done_tasks }}</div>
+      </div>
+      
+</div>  
+<h2 class="head-text">CONTACTS</h2>
+<div class="profile-container">
+    <div class="profile-info">
+        Phone: {{ profile.phone_number }}
+      </div>
+    
+      <div class="profile-info">
+        {% if profile.telegram_nickname %}
+          TG: <a href="https://t.me/{{ profile.telegram_nickname|urlencode }}" target="_blank" rel="noopener noreferrer">@{{ profile.telegram_nickname }}</a>
+        {% else %}
+          <span class="no-data">No telegram.</span>
+        {% endif %}
+      </div>
+</div>
+<h2 class="head-text">PERSONAL INFO</h2>
+<div class="profile-container">
+    <div class="profile-info">Date of birth: {{ profile.data_of_birth }}</div>
+  
+    <div class="profile-info">Date of hire: {{ profile.date_of_hire }}</div>
+</div>
+  
+{% endblock %}

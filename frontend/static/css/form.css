@@ -1,0 +1,99 @@
+/* forms.css */
+
+form {
+    max-width: 420px;
+    margin: 2.5rem auto;
+    background: rgba(20, 30, 60, 0.85);
+    padding: 3.5rem 3rem 4rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(10, 20, 60, 0.7);
+    backdrop-filter: blur(14px);
+    color: #d0e4ff;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  form:hover {
+    box-shadow: 0 12px 32px rgba(25, 45, 90, 0.9);
+  }
+  
+  form h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #8ab8ff;
+    text-shadow: 0 0 10px #4f7fff;
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: #aac9ff;
+    font-weight: 600;
+    text-shadow: 0 0 5px #7093cc;
+  }
+  
+  form input[type="text"],
+  form input[type="password"],
+  form input[type="email"],
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(40, 55, 90, 0.25);
+    color: #c6d9ff;
+    box-shadow: inset 0 0 12px rgba(80, 110, 170, 0.6);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(6px);
+  }
+  
+  form input[type="text"]:focus,
+  form input[type="password"]:focus,
+  form input[type="email"]:focus,
+  form select:focus,
+  form textarea:focus {
+    background: rgba(70, 100, 180, 0.4);
+    box-shadow: inset 0 0 16px rgba(120, 170, 255, 0.9);
+    color: #e6f0ff;
+  }
+  
+  form button[type="submit"] {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #3a76ff, #1a3dbf);
+    border: none;
+    border-radius: 12px;
+    color: #e0e9ff;
+    font-weight: 700;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(60, 110, 255, 0.7);
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+    text-shadow: 0 0 6px #acc9ff;
+  }
+  
+  form button[type="submit"]:hover,
+  form button[type="submit"]:focus {
+    background: linear-gradient(135deg, #5a8cff, #2a5edb);
+    box-shadow: 0 8px 24px rgba(80, 130, 255, 0.9);
+    outline: none;
+  }
+  
+  .message.error {
+    color: #ff6a6a;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 0 0 8px #ff8787;
+    letter-spacing: 0.03em;
+  }
+  

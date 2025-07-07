@@ -1,0 +1,8 @@
+
+.login-container {
+    box-shadow: 0 8px 24px rgba(30, 80, 200, 0.6);
+    border-radius: 14px;
+    background: rgba(20, 35, 65, 0.85);
+    backdrop-filter: blur(14px);
+  }
+  

@@ -1,0 +1,114 @@
+/* profile.css */
+
+
+.profile-container {
+  background: rgba(20, 35, 70, 0.75);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(10, 25, 50, 0.9);
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+.profile-container-tasks {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    background: rgba(20, 35, 70, 0.75);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(10, 25, 50, 0.9);
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;    
+    max-width: 100%;
+  }
+ 
+.profile-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 6px #4f79d9;
+  word-wrap: break-word;
+}
+
+.profile-container a {
+  color: #85baff;
+  font-weight: 700;
+  text-decoration: none;
+  text-shadow: 0 0 8px #a3d4ff;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.profile-container a:hover {
+  color: #d0e4ff;
+  text-shadow: 0 0 16px #c9e0ff;
+}
+
+.profile-container img {
+  margin-top: 1.5rem;
+  max-width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #5a8de0cc;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.profile-container img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #85baffdd;
+}
+
+.profile-container p.no-data {
+  font-style: italic;
+  color: #7a8eb5;
+  text-shadow: none;
+  margin-top: 1rem;
+}
+.head-text {
+    max-width: 100% !important;
+    margin: 5px auto !important;
+}
+.task-stats {
+    background: linear-gradient(135deg, #14294e, #1f3a7a);
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(30, 60, 120, 0.8);
+    max-width: 100%;
+    width: 45%;
+    margin: 1.5rem auto;
+    color: #cce4ff;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    user-select: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .task-stats:hover {
+    box-shadow: 0 12px 32px rgba(70, 130, 250, 0.9);
+    transform: translateY(-6px);
+  }
+  
+  .task-stats .title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: #7aaeff;
+    text-shadow: 0 0 5px #5c8cdb;
+    letter-spacing: 0.05em;
+  }
+  
+  .task-stats .number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #e0f0ff;
+    text-shadow:
+      0 0 10px #7aaeff,
+      0 0 20px #7aaeff;
+  }
+  

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}log in{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+
+{% endblock %}
+{% block content %}
+<div class="login-container">
+  <h2 class="head-text">LOGIN</h2>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="message error">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <label for="id_username">login</label>
+    <input type="text" name="username" id="id_username" required placeholder="Введіть логін" autocomplete="username" autofocus>
+
+    <label for="id_password">password</label>
+    <input type="password" name="password" id="id_password" required placeholder="Введіть пароль" autocomplete="current-password">
+
+    <button type="submit">login</button>
+  </form>
+</div>
+{% endblock %}
