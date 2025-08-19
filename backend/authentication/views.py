@@ -5,7 +5,7 @@ from .forms import RegisterForm, EmailCodeForm
 from .models import Profile
 from django.core.mail import send_mail
 from .models import CustomUser
-
+from task_system.utils import update_count_of_tasks, update_count_of_completed_tasks
 
 def login_view(request):
     if request.method == 'POST':
@@ -70,9 +70,19 @@ def verify_email_view(request):
 
 
 def home_view(request):
+    if request.user.is_authenticated:
+        update_count_of_tasks(request.user)
+        update_count_of_completed_tasks(request.user)
+    else:
+        return redirect('login')
     return render(request, 'home.html')
 
 def profile_view(request):
+    if request.user.is_authenticated:
+        update_count_of_tasks(request.user)
+        update_count_of_completed_tasks(request.user)
+    else:
+        return redirect('login')
     try:
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:

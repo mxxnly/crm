@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR_HIGH = Path(__file__).resolve().parent.parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
+    'task_system',
 ]
 
 MIDDLEWARE = [
@@ -111,7 +113,7 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -141,7 +143,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'maksskladan@gmail.com'          # твоя поштова адреса
-EMAIL_HOST_PASSWORD = 'xxxx xxxx xxxx xxxx'    # пароль додатку (НЕ звичайний пароль)
+EMAIL_HOST_USER = 'maksskladan@gmail.com'       
+EMAIL_HOST_PASSWORD = ''   
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

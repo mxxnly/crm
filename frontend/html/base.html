@@ -19,34 +19,50 @@
   <div class="custom-ui">
 
     <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-        <div class="container">
-          <a class="navbar-brand text-glow" href="#">CRM</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">{{user.username}}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">logout</a>
-                </li>
-              {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'register' %}">registration</a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
+      <div class="container">
+        <!-- Бренд / Ліва частина -->
+        <a class="navbar-brand text-glow" href="{% url 'home' %}">CRM</a>
+        
+        <!-- Кнопка для мобільного меню -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Колапс для мобільного -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- Ліва частина меню -->
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create_task' %}">Create task</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'list_tasks' %}">List of tasks</a>
+            </li>
+          </ul>
+    
+          <!-- Права частина меню -->
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Registration</a>
+              </li>
+            {% endif %}
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
+    
       
       
       

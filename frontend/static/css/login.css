@@ -6,3 +6,18 @@
     backdrop-filter: blur(14px);
   }
   
+  .links a {
+    color: #4DA6FF; /* яскраво-синій */
+    text-decoration: none; /* прибирає підкреслення */
+    transition: color 0.3s ease; /* плавна зміна кольору при наведенні */
+    margin: 20px;
+    font-size: large;
+}
+
+.links a:hover {
+    color: #1E90FF; 
+}
+.links {
+  margin: 0 auto;
+  text-align: center;
+}

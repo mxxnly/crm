@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}List of Tasks{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/create_task.css' %}" />
+{% endblock %}
+{% block content %}
+<!-- Модалка -->
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Available Actions</h3>
+      <ul class="modal-actions">
+          <li><a href="#" id="complete-link">✅ Mark as Completed</a></li>
+          <li><a href="#" id="archive-link">📦 Archive Task</a></li>
+          <li><a href="#" id="uncomplete-link"> Mark as Uncompleted</a></li>
+          <li><a href="#" id="unarchive-link"> Unarchive Task</a></li>
+          <li><a href="#" id="edit-link">✏️ Edit Task</a></li>
+          <li><a href="#" id="delete-link">🗑️ Delete Task</a></li>
+      </ul>
+    </div>
+  </div>
+ <h2 class="head-text">List of tasks</h2>
+<div class="list-container">
+    {% for t in tasks %}
+    <div class="task-item{% if t.is_archived %} archived{% elif t.is_completed %} completed{% endif %}">
+        <div class="task-content">
+            <h3>{{ t.title }}</h3>
+            <p>{{ t.description }}</p>
+            <p>Created at: {{t.created_at}}</p>
+            <p class="
+    {% if t.due_status == 'overdue' %}due-overdue
+    {% elif t.due_status == 'soon' %}due-soon
+    {% elif t.due_status == 'no_date' %}due-no-date
+    {% endif %}
+">
+    Due Date: {{ t.due_date|date:"Y-m-d H:i" }}
+</p>
+            <p>Priority: {{ t.priority }}</p>
+            <p>Created by: {{ t.created_by.username }}</p>
+            <p>
+                Assigned to: 
+                {% for u in t.for_who.all %}
+                    {{ u.username }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    nobody
+                {% endfor %}
+            </p>
+        </div>
+        <button class="task-action-btn" data-task-id="{{ t.id }}">Task Actions</button>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById("taskModal");
+        const closeBtn = document.querySelector(".modal .close");
+        const openBtns = document.querySelectorAll(".task-action-btn");
+    
+        // Посилання для дій
+        const completeLink = document.getElementById("complete-link");
+        const archiveLink = document.getElementById("archive-link");
+        const uncompleteLink = document.getElementById("uncomplete-link");
+        const unarchiveLink = document.getElementById("unarchive-link");
+        const editLink = document.getElementById("edit-link");
+        const deleteLink = document.getElementById("delete-link");
+    
+        openBtns.forEach(btn => {
+            btn.onclick = () => {
+                const taskId = btn.dataset.taskId;
+    
+                // Підставляємо id у посилання
+                completeLink.href = `/complete-task/${taskId}/`;
+                archiveLink.href = `/archive-task/${taskId}/`;
+                uncompleteLink.href = `/uncomplete-task/${taskId}/`;
+                unarchiveLink.href = `/unarchive-task/${taskId}/`;
+                editLink.href = `/edit-task/${taskId}/`;
+                deleteLink.href = `/delete-task/${taskId}/`;
+    
+                modal.style.display = "flex";
+            };
+        });
+    
+        closeBtn.onclick = () => modal.style.display = "none";
+    
+        window.onclick = (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    });
+    </script>
+    
+    
+{% endblock %}
