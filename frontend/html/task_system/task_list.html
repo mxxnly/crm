@@ -14,8 +14,8 @@
       <ul class="modal-actions">
           <li><a href="#" id="complete-link">✅ Mark as Completed</a></li>
           <li><a href="#" id="archive-link">📦 Archive Task</a></li>
-          <li><a href="#" id="uncomplete-link"> Mark as Uncompleted</a></li>
-          <li><a href="#" id="unarchive-link"> Unarchive Task</a></li>
+          <li><a href="#" id="uncomplete-link">❌ Mark as Uncompleted</a></li>
+          <li><a href="#" id="unarchive-link">📦📤 Unarchive Task</a></li>
           <li><a href="#" id="edit-link">✏️ Edit Task</a></li>
           <li><a href="#" id="delete-link">🗑️ Delete Task</a></li>
       </ul>
@@ -59,7 +59,6 @@
         const closeBtn = document.querySelector(".modal .close");
         const openBtns = document.querySelectorAll(".task-action-btn");
     
-        // Посилання для дій
         const completeLink = document.getElementById("complete-link");
         const archiveLink = document.getElementById("archive-link");
         const uncompleteLink = document.getElementById("uncomplete-link");
@@ -71,7 +70,6 @@
             btn.onclick = () => {
                 const taskId = btn.dataset.taskId;
     
-                // Підставляємо id у посилання
                 completeLink.href = `/complete-task/${taskId}/`;
                 archiveLink.href = `/archive-task/${taskId}/`;
                 uncompleteLink.href = `/uncomplete-task/${taskId}/`;

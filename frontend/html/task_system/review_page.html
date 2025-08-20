@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}List of Reviews task{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/create_task.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/list_reviews.css' %}" />
+
+{% endblock %}
+{% block content %}
+<h2 class="head-text">List of Reviews</h2>
+
+<form method="get" id="filter-form">
+    <label for="status-filter">Filter by status:</label>
+    <select name="status" id="status-filter" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="approved" {% if request.GET.status == 'approved' %}selected{% endif %}>Approved</option>
+        <option value="rejected" {% if request.GET.status == 'rejected' %}selected{% endif %}>Rejected</option>
+    </select>
+
+    <label for="submitted-by-filter">Submitted by:</label>
+    <select name="submitted_by" id="submitted-by-filter" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for user in users %}
+        <option value="{{ user.id }}" {% if request.GET.submitted_by == user.id|stringformat:"s" %}selected{% endif %}>
+            {{ user.username }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="reviewed-by-filter">Reviewed by:</label>
+    <select name="reviewed_by" id="reviewed-by-filter" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for user in users %}
+        <option value="{{ user.id }}" {% if request.GET.reviewed_by == user.id|stringformat:"s" %}selected{% endif %}>
+            {{ user.username }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <a href="{% url 'review_page' %}" class="clear-filters">Clear Filters</a>
+</form>
+
+<div class="list-container">
+    {% for r in tasks_review %}
+<div class="task-item{% if r.task.is_archived %} archived{% elif r.task.is_completed %} completed{% endif %}">
+    <div class="task-content">
+        <h3>For task: {{ r.task.title }}</h3>
+        <p>Who sent to review: {{ r.submitted_by }}</p>
+        <p>Created at: {{ r.send_to_review }}</p>
+        <p>Rating: {{ r.rating }}/10</p>
+        <p>Reviewed at: {{ r.reviewed_at }}</p>
+        <p>Reviewed by: {{ r.reviewed_by }}</p>
+        <p>Comments: {{ r.comments }}</p>
+        <p>Status: 
+            <span class="{% if r.status == 'pending' %}pending{% elif r.status == 'approved' %}approved{% else %}rejected{% endif %}">
+                {{ r.status }}
+            </span>
+        </p>        <p>Files: 
+            {% if r.files %}
+                <a href="{{ r.files.url }}" target="_blank">Download</a>
+            {% else %}
+                None
+            {% endif %}
+        </p>
+    </div>
+
+    {% if request.user.is_staff or r.submitted_by == request.user %}
+    <button class="task-action-btn" data-review-id="{{ r.id }}">Edit Review</button>
+    {% endif %}
+</div>
+{% empty %}
+<p>No reviews available.</p>
+{% endfor %}
+
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Edit Review</h3>
+      <form method="post" enctype="multipart/form-data" id="review-form">
+        {% csrf_token %}
+        <div id="modal-form-fields">
+        </div>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+</div>
+
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("taskModal");
+    const closeBtn = modal.querySelector(".close");
+    const formFieldsContainer = document.getElementById("modal-form-fields");
+    const reviewForm = document.getElementById("review-form");
+
+    document.querySelectorAll(".task-action-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const reviewId = btn.dataset.reviewId;
+            if (!reviewId) return;
+
+            try {
+                const response = await fetch(`/reviews/edit/${reviewId}/?modal=1`);
+                if (!response.ok) throw new Error("Failed to fetch form");
+                const html = await response.text();
+
+                formFieldsContainer.innerHTML = html;
+                reviewForm.setAttribute("action", `/reviews/edit/${reviewId}/`);
+                modal.style.display = "flex";
+            } catch (err) {
+                console.error(err);
+                alert("Error loading review form");
+            }
+        });
+    });
+
+    closeBtn.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+});
+
+</script>
+    
+    
+{% endblock %}

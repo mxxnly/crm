@@ -41,4 +41,44 @@
     color: #aac9ff;
     text-shadow: 0 0 4px #5a7bbd;
   }
-  
+  /* Кнопка для відкриття модалки (Send to Review) */
+.open-review-modal {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #00eaff, #0066ff);
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 234, 255, 0.6);
+}
+
+.open-review-modal:hover {
+  background: linear-gradient(90deg, #0066ff, #00eaff);
+  box-shadow: 0 0 15px rgba(0, 234, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+/* Кнопка відправки форми всередині модалки */
+.btn-submit {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 15px;
+  background: #00eaff;
+  color: #0a0f1c;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px #00eaff;
+}
+
+.btn-submit:hover {
+  background: #0066ff;
+  color: #ffffff;
+  box-shadow: 0 0 20px #00eaff;
+  transform: translateY(-2px);
+}

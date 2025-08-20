@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import RegisterForm, EmailCodeForm
@@ -6,7 +6,8 @@ from .models import Profile
 from django.core.mail import send_mail
 from .models import CustomUser
 from task_system.utils import update_count_of_tasks, update_count_of_completed_tasks
-
+from task_system.models import TaskModel, TaskReview
+from task_system.forms import TaskReviewForm
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -48,7 +49,6 @@ def register_view(request):
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
-# views.py
 def verify_email_view(request):
     if request.method == 'POST':
         form = EmailCodeForm(request.POST)
@@ -75,7 +75,33 @@ def home_view(request):
         update_count_of_completed_tasks(request.user)
     else:
         return redirect('login')
-    return render(request, 'home.html')
+
+    tasks = TaskModel.objects.filter(
+        for_who=request.user,
+        is_archived=False,
+        is_completed=False,
+    ).order_by('due_date')
+    tasks_1 = []
+    for task in tasks:
+        if not task.reviews.filter(status__in=['pending', 'approved']).exists():
+            tasks_1.append(task)
+
+    review_form = TaskReviewForm()
+    context = {
+        'tasks': tasks_1,
+        'review_form': review_form,
+    }
+    return render(request, 'home.html', context)
+def send_to_review(request, task_id):
+    task = get_object_or_404(TaskModel, id=task_id, for_who=request.user)
+    if request.method == "POST":
+        form = TaskReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.task = task
+            review.submitted_by = request.user
+            review.save()
+    return redirect('home')
 
 def profile_view(request):
     if request.user.is_authenticated:

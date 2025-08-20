@@ -20,3 +20,50 @@ class TaskModel(models.Model):
 
     def __str__(self):
         return "Task {}. Priority: {} stars. To be completed by {}".format(self.title, self.priority, self.due_date)
+
+
+from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+class TaskReview(models.Model):
+    task = models.ForeignKey(
+        'task_system.TaskModel',
+        on_delete=models.CASCADE,
+        related_name='reviews'
+    )
+    submitted_by = models.ForeignKey(
+        'authentication.CustomUser',
+        on_delete=models.CASCADE,
+        related_name='submitted_reviews'
+    )
+    reviewed_by = models.ForeignKey(
+        'authentication.CustomUser',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='task_reviews'
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ('pending', 'Pending'),
+            ('approved', 'Approved'),
+            ('rejected', 'Rejected'),
+        ],
+        default='pending'
+    )
+    send_to_review = models.DateTimeField(auto_now_add=True)
+    reviewed_at = models.DateTimeField(null=True, blank=True)
+
+    files = models.FileField(upload_to='task_reviews/', null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
+
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)],
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return f"Review for {self.task.title} by {self.submitted_by.username} [{self.status}]"

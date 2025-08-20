@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
-from .models import TaskModel
+from .models import TaskModel, TaskReview
 from authentication.models import CustomUser
 
 class TaskForm(forms.ModelForm):
@@ -44,3 +44,26 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = TaskModel
         fields = ['title', 'description', 'due_date', 'priority', 'for_who']
+
+
+class TaskReviewForm(forms.ModelForm):
+    class Meta:
+        model = TaskReview
+        fields = ['comments', 'files']
+        widgets = {
+            'comments': forms.Textarea(attrs={
+                'placeholder': 'Write your comments...',
+                'class': 'form-control',
+                'rows': 3
+            }),
+            'files': forms.ClearableFileInput(attrs={'class': 'form-control'})
+        }
+
+class TaskReviewFormUpdate(forms.ModelForm):
+    class Meta:
+        model = TaskReview
+        fields = ['rating', 'status']
+        widgets = {
+            'comments': forms.Textarea(attrs={'rows': 3}),
+            'status': forms.Select(),
+        }

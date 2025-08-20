@@ -1,0 +1,43 @@
+span.pending,
+span.approved,
+span.rejected {
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.9rem;
+}
+
+span.pending {
+    background-color: #f0ad4e; 
+}
+
+span.approved {
+    background-color: #5cb85c;
+}
+
+span.rejected {
+    background-color: #d9534f; 
+}
+#filter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+#filter-form select, #filter-form button, #filter-form .clear-filters {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#filter-form .clear-filters {
+    background: #f44336;
+    color: white;
+    text-decoration: none;
+}
+
+#filter-form .clear-filters:hover {
+    background: #d32f2f;
+}
